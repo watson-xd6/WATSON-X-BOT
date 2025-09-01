@@ -1,168 +1,102 @@
-import axios from 'axios'
-import crypto from 'crypto'
 import yts from 'yt-search'
+import axios from 'axios'
 
-const handler = async (m, { conn, args, command }) => {
-  if (args.length < 1) return m.reply(`🔎 *Pencarian YouTube:*\n- *.play <judul>*\n\n📥 *Download Video/Audio:*\n- *.ytmp3 <url>*\n- *.ytmp4 <url> [quality]\n\n📌 *Quality:* 144, 240, 360, 480, 720, 1080 (default: 720p untuk video)`);
+/*  PLAY COMMAND (Search + Buttons) */
+const playHandler = async (m, { conn, command, text, usedPrefix }) => {
+  if (!text) throw `Use example: ${usedPrefix}${command} Despacito`
 
-  let query = args.join(' ');
-  let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.sender;
-  let username = conn.getName(who);
+  // 🔍 Search on YouTube
+  const search = await yts(text)
+  const vid = search.videos[0]
+  if (!vid) throw 'Video not found, coba judul lain ya Sayang~'
 
-  let fkon = { 
-    key: { 
-      fromMe: false, 
-      participant: `0@c.us`, 
-      ...(m.chat ? { remoteJid: `status@broadcast` } : {}) 
-    }, 
-    message: { 
-      contactMessage: { 
-        displayName: username, 
-        vcard: `BEGIN:VCARD\nVERSION:3.0\nN:;${username},;;;\nFN:${username}\nitem1.TEL;waid=${who.split('@')[0]}:${who.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD`
+  const { title, thumbnail, url, timestamp, views, ago } = vid
+
+  // 🖼️ Send result with buttons
+  await conn.sendMessage(m.chat, {
+    image: { url: thumbnail },
+    caption: `🎶 *${title}*\n⌛ ${timestamp}\n👀 ${views} views\n📅 ${ago}\n\nPilih format yang ingin diunduh 👇`,
+    footer: 'Powered by WATSON-XD',
+    buttons: [
+      {
+        buttonId: `.ytmp3 ${url}`,
+        buttonText: { displayText: '🎵 Download MP3' },
+        type: 1
+      },
+      {
+        buttonId: `.ytmp4 ${url}`,
+        buttonText: { displayText: '📹 Download MP4' },
+        type: 1
       }
-    }
-  };
+    ],
+    headerType: 4
+  }, { quoted: m })
+}
 
-  switch (command) {
-    case 'play2':
-      try {
-        let searchResults = await yts(query);
-        let video = searchResults.videos[0];
+playHandler.help = ['play2 <query>']
+playHandler.tags = ['downloader']
+playHandler.command = /^play2$/i
+playHandler.limit = 5
 
-        if (!video) return m.reply("⚠️ *Tidak ada hasil untuk pencarian itu!*");
 
-        let buttons = [
-          { buttonId: `.ytmp3 ${video.url}`, buttonText: { displayText: ` Play MP3 ` }, type: 1 },
-          { buttonId: `.ytmp4 ${video.url}`, buttonText: { displayText: ` Play MP4 ` }, type: 1 }
-        ];
-
-        let caption = `📌 *Hasil Pencarian:*\n\n📽 *Judul:* ${video.title}\n📅 *Upload:* ${video.ago}\n🛰️ *Durasi:* ${video.timestamp}\n🔭 *Views:* ${video.views.toLocaleString()}\n🎥 *Channel:* ${video.author.name}\n🔗 *Source:* ${video.url}`;
-
-        await conn.sendMessage(m.chat, {
-          text: caption,
-          footer: 'Silahkan pilih formatnya:',
-          buttons: buttons,
-          headerType: 1
-        }, { quoted: fkon });
-      } catch (e) {
-        return m.reply(`❌ *Gagal mencari video!*`);
-      }
-      break;
-
-    case 'ytmp3':
-    case 'ytmp4':
-      let format = command === 'ytmp3' ? 'mp3' : args[1] || '720';
-      if (!/^https?:\/\/(www\.)?youtube\.com|youtu\.be/.test(query)) return m.reply("⚠️ *Masukkan link YouTube yang valid!*");
-
-      try {
-        let res = await downloadYouTube(query, format);
-        if (!res.status) return m.reply(`❌ *Error:* ${res.error}`);
-
-        let { title, download, type } = res.result;
-
-        if (type === 'video') {
-          await conn.sendMessage(m.chat, { 
-            video: { url: download },
-            caption: `🎬 *${title}*`
-          }, { quoted: fkon });
-        } else {
-          await conn.sendMessage(m.chat, { 
-            audio: { url: download }, 
-            mimetype: 'audio/mp4', 
-            fileName: `${title}.mp3` 
-          }, { quoted: fkon });
-        }
-      } catch (e) {
-        m.reply(`*Gagal mengunduh!*`);
-      }
-      break;
-
-    default:
-      m.reply("*Command tidak dikenal!*");
-  }
-};
-
-handler.menudownload = ['play', 'ytmp3', 'ytmp4'];
-handler.command = ['play', 'ytmp3', 'ytmp4'];
-export default handler;
-
-// =========================================
-
-async function downloadYouTube(link, format = '720') {
-  const apiBase = "https://media.savetube.me/api";
-  const apiCDN = "/random-cdn";
-  const apiInfo = "/v2/info";
-  const apiDownload = "/download";
-
-  const decryptData = async (enc) => {
-    try {
-      const key = Buffer.from('C5D58EF67A7584E4A29F6C35BBC4EB12', 'hex');
-      const data = Buffer.from(enc, 'base64');
-      const iv = data.slice(0, 16);
-      const content = data.slice(16);
-      
-      const decipher = crypto.createDecipheriv('aes-128-cbc', key, iv);
-      let decrypted = decipher.update(content);
-      decrypted = Buffer.concat([decrypted, decipher.final()]);
-      
-      return JSON.parse(decrypted.toString());
-    } catch (error) {
-      return null;
-    }
-  };
-
-  const request = async (endpoint, data = {}, method = 'post') => {
-    try {
-      const { data: response } = await axios({
-        method,
-        url: `${endpoint.startsWith('http') ? '' : apiBase}${endpoint}`,
-        data: method === 'post' ? data : undefined,
-        params: method === 'get' ? data : undefined,
-        headers: {
-          'accept': '*/*',
-          'content-type': 'application/json',
-          'origin': 'https://yt.savetube.me',
-          'referer': 'https://yt.savetube.me/',
-          'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
-        }
-      });
-      return { status: true, data: response };
-    } catch (error) {
-      return { status: false, error: error.message };
-    }
-  };
-
-  const youtubeID = link.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/))([a-zA-Z0-9_-]{11})/);
-  if (!youtubeID) return { status: false, error: "Gagal mengekstrak ID video dari URL." };
+/*  YTMP3 COMMAND (Download MP3) */
+const ytmp3Handler = async (m, { conn, args }) => {
+  if (!args[0]) throw 'Kirim link YouTube yang ingin diunduh 🎶'
 
   try {
-    const cdnRes = await request(apiCDN, {}, 'get');
-    if (!cdnRes.status) return cdnRes;
-    const cdn = cdnRes.data.cdn;
+    const api = `https://p.oceansaver.in/ajax/download.php?format=mp3&url=${encodeURIComponent(args[0])}`
+    const res = await axios.get(api)
+    const data = res.data
 
-    const infoRes = await request(`https://${cdn}${apiInfo}`, { url: `https://www.youtube.com/watch?v=${youtubeID[1]}` });
-    if (!infoRes.status) return infoRes;
-    
-    const decrypted = await decryptData(infoRes.data.data);
-    if (!decrypted) return { status: false, error: "Gagal mendekripsi data video." };
+    if (!data || !data.url) throw 'Gagal mendapatkan link MP3 😢'
 
-    const downloadRes = await request(`https://${cdn}${apiDownload}`, {
-      id: youtubeID[1],
-      downloadType: format === 'mp3' ? 'audio' : 'video',
-      quality: format,
-      key: decrypted.key
-    });
-
-    return {
-      status: true,
-      result: {
-        title: decrypted.title || "Tidak diketahui",
-        type: format === 'mp3' ? 'audio' : 'video',
-        format: format,
-        download: downloadRes.data.data.downloadUrl
-      }
-    };
-  } catch (error) {
-    return { status: false, error: error.message };
+    await conn.sendMessage(m.chat, {
+      audio: { url: data.url },
+      mimetype: 'audio/mpeg',
+      fileName: `${data.meta.title}.mp3`,
+      caption: `🎶 *${data.meta.title}*\n⌛ ${data.meta.duration}`,
+    }, { quoted: m })
+  } catch (e) {
+    throw `Gagal download MP3: ${e.message}`
   }
 }
+
+ytmp3Handler.help = ['ytmp3 <url>']
+ytmp3Handler.tags = ['downloader']
+ytmp3Handler.command = /^ytmp3$/i
+ytmp3Handler.limit = 5
+
+
+/*  YTMP4 COMMAND (Download MP4) */
+const ytmp4Handler = async (m, { conn, args }) => {
+  if (!args[0]) throw 'Kirim link YouTube yang ingin diunduh 📹'
+
+  try {
+    const api = `https://p.oceansaver.in/ajax/download.php?format=mp4&url=${encodeURIComponent(args[0])}`
+    const res = await axios.get(api)
+    const data = res.data
+
+    if (!data || !data.url) throw 'Gagal mendapatkan link MP4 😢'
+
+    await conn.sendMessage(m.chat, {
+      video: { url: data.url },
+      mimetype: 'video/mp4',
+      fileName: `${data.meta.title}.mp4`,
+      caption: `📹 *${data.meta.title}*\n⌛ ${data.meta.duration}`,
+    }, { quoted: m })
+  } catch (e) {
+    throw `Gagal download MP4: ${e.message}`
+  }
+}
+
+ytmp4Handler.help = ['ytmp4 <url>']
+ytmp4Handler.tags = ['downloader']
+ytmp4Handler.command = /^ytmp4$/i
+ytmp4Handler.limit = 5
+
+
+export default [
+  playHandler,
+  ytmp3Handler,
+  ytmp4Handler
+]
