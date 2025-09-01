@@ -41,7 +41,7 @@ global.nomorown = '263781330745'
 global.readMore = readMore
 global.author = 'Shirokami Ryzen'
 global.namebot = 'Nao-MD ESM'
-global.wm = '© Nao-MD By Shirokami RyWATSONlobal.watermark = wm
+global.wm = '© Nao-MD By Shirokami global.watermark = wm'
 global.botdate = `⫹⫺ DATE: ${week} ${date}\n⫹⫺ 𝗧𝗶𝗺𝗲: ${wktuwib}`
 global.bottime = `T I M E : ${wktuwib}`
 global.stickpack = `Sticker Dibuat dengan ${namebot}\ngithub.com/ShirokamiRyzen\n\nNao-MD ESM\n+${nomorbot}`
