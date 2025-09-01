@@ -1,6 +1,6 @@
 /*
 Author : Shirokami Ryzen 
-WA : +6285174269046
+WA : +6285174269046y
 Base : Elaina-MultiDevice
 Release : 22 Nov 2022
 */
