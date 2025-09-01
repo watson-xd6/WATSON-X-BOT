@@ -6,6 +6,7 @@ import { createRequire } from 'module';
 import { createInterface } from 'readline';
 import { setupMaster, fork } from 'cluster';
 import { watchFile, unwatchFile } from 'fs';
+import express from 'express'; // ✅ Added Express
 
 // Setup console output
 const { say } = cfonts;
@@ -77,3 +78,15 @@ function start(file) {
 }
 
 start('main.js');
+
+// ✅ Express server for Render hosting
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+app.get('/', (req, res) => {
+  res.send(`🚀 ${name} bot is running and alive!`);
+});
+
+app.listen(PORT, () => {
+  console.log(`✅ Server is running on port ${PORT}`);
+});
