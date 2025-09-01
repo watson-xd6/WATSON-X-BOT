@@ -1,8 +1,5 @@
 /*
-Author : Shirokami Ryzen 
-WA : +6285174269046y
-Base : Elaina-MultiDevice
-Release : 22 Nov 2022
+https://whatsapp.com/channel/0029Vb5m3D9A2pL6kvlwSf2S
 */
 
 import { watchFile, unwatchFile } from 'fs'
@@ -31,7 +28,7 @@ const readMore = more.repeat(4001)
 
 /*============= MAIN INFO =============*/
 global.pairing = '263781330745'
-global.owner = [['263781330745', 'ShirokamiRyzen', true]]
+global.owner = [['263781330745', 'WatsonXD', true]]
 global.mods = []
 global.prems = []
 global.nomorbot = '263781330745'
@@ -39,20 +36,20 @@ global.nomorown = '263781330745'
 
 /*============= WATERMARK =============*/
 global.readMore = readMore
-global.author = 'Shirokami Ryzen'
-global.namebot = 'Nao-MD ESM'
-global.wm = '© Nao-MD By Shirokami global.watermark = wm'
+global.author = 'watsonfourpence'
+global.namebot = 'WATSON-XD-BOT ESM'
+global.wm = '© WATSON-MD By Watson global.watermark = wm'
 global.botdate = `⫹⫺ DATE: ${week} ${date}\n⫹⫺ 𝗧𝗶𝗺𝗲: ${wktuwib}`
 global.bottime = `T I M E : ${wktuwib}`
-global.stickpack = `Sticker Dibuat dengan ${namebot}\ngithub.com/ShirokamiRyzen\n\nNao-MD ESM\n+${nomorbot}`
-global.stickauth = `© Nao-MD By Shirokami Ryzen`
+global.stickpack = `Sticker Dibuat dengan ${namebot}\ngithub.com/watson-xd6\n\nWATSON-XD-BOT\n+${nomorbot}`
+global.stickauth = `© WATSON-XD-BOT By WatsonXD`
 global.week = `${week} ${date}`
 global.wibb = `${wktuwib}`
 
 //*============= SOSMED =============*/
-global.sig = 'https://www.instagram.com/fatih_frdaus'
-global.sgh = 'https://github.com/ShirokamiRyzen'
-global.sgc = 'https://whatsapp.com/channel/0029Vb2qO9Q5vKAGd2t7ap1F'
+global.sig = 'https://www.instagram.com/watson-xd3'
+global.sgh = 'https://github.com/watson-xd6'
+global.sgc = 'https://whatsapp.com/channel/0029Vb5m3D9A2pL6kvlwSf2S'
 global.sgw = 'https://ryzumi.vip'
 global.sdc = '-'
 global.sfb = 'https://www.facebook.com/Nao.Tomori.UwU'
