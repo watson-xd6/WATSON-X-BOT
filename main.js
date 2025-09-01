@@ -1,13 +1,3 @@
-/* If You Copy, Don`t Delete This Credit!!! 
-  Don`t Sell This Script Or I Take Immediately 
-  Yang Jual Script Ini Report/Hangusin Aja Akunnya Atau Pukulin ae orangnya
-  Move To Pairing Code
-  Buat Yg Nggk muncul Codenya Itu Disebabkan Oleh Banyaknya Plugins
-  Jika Ingin Mengambil Sesi, Backup Semua File Plugins & Hapus Semua File Plugins
-  Setelah Sudah Kalian Bisa Mengembalikan Semua File Pluginsnya Agar Bisa Dipakai
-  Regards from YanXiao ♡
-*/
-
 // process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '1';
 
@@ -171,7 +161,7 @@ async function connectionUpdate(update) {
   }
 
   if(connection == 'close') {
-    console.log(chalk.red('⏱️ Koneksi terputus & mencoba menyambung ulang...'));
+    console.log(chalk.red('⏱️ Connection lost & trying to reconnect....'));
   }
 
   if(lastDisconnect && lastDisconnect.error && lastDisconnect.error.output && lastDisconnect.error.output.statusCode !== DisconnectReason.loggedOut && conn.ws.readyState !== CONNECTING) {
@@ -217,18 +207,20 @@ global.reloadHandler = async function (restatConn) {
     conn.ev.off('creds.update', conn.credsUpdate)
   }
 
-  conn.welcome = '❖━━━━━━[ Selamat Datang ]━━━━━━❖\n\n┏––––––━━━━━━━━•\n│☘︎ @subject\n┣━━━━━━━━┅┅┅\n│( 👋 Hallo @user)\n├[ Intro ]—\n│ NAMA: \n│ USIA: \n│ JENIS KELAMIN:\n┗––––––━━┅┅┅\n\n––––––┅┅ DESKRIPSI ┅┅––––––\n@desc'
-  conn.bye = '❖━━━━━━[ Meninggalkan ]━━━━━━❖\nSayonara @user 👋😃'
-  conn.spromote = '@user Sekarang jadi admin!'
-  conn.sdemote = '@user Sekarang bukan lagi admin!'
-  conn.sDesc = 'Deskripsi telah diubah menjadi \n@desc'
-  conn.sSubject = 'Judul grup telah diubah menjadi \n@subject'
-  conn.sIcon = 'Icon grup telah diubah!'
-  conn.sRevoke = 'Link group telah diubah ke \n@revoke'
-  conn.sAnnounceOn = 'Group telah di tutup!\nsekarang hanya admin yang dapat mengirim pesan.'
-  conn.sAnnounceOff = 'Group telah di buka!\nsekarang semua peserta dapat mengirim pesan.'
-  conn.sRestrictOn = 'Edit Info Grup di ubah ke hanya admin!'
-  conn.sRestrictOff = 'Edit Info Grup di ubah ke semua peserta!'
+  
+conn.welcome = '❖━━━━━━[ Welcome ]━━━━━━❖\n\n┏––––––━━━━━━━━•\n│☘︎ @subject\n┣━━━━━━━━┅┅┅\n│( 👋 Hello @user)\n├[ Intro ]—\n│ NAME: \n│ AGE: \n│ GENDER:\n┗––––––━━┅┅┅\n\n––––––┅┅ DESCRIPTION ┅┅––––––\n@desc'
+  
+conn.bye = '❖━━━━━━[ Leaving ]━━━━━━❖\nGoodbye @user 👋😃'
+conn.spromote = '@user is now an admin!'
+conn.sdemote = '@user is no longer an admin!'
+conn.sDesc = 'Group description has been changed to \n@desc'
+conn.sSubject = 'Group name has been changed to \n@subject'
+conn.sIcon = 'Group icon has been updated!'
+conn.sRevoke = 'Group link has been changed to \n@revoke'
+conn.sAnnounceOn = 'Group has been closed!\nNow only admins can send messages.'
+conn.sAnnounceOff = 'Group has been opened!\nNow all participants can send messages.'
+conn.sRestrictOn = 'Group info editing set to admin only!'
+conn.sRestrictOff = 'Group info editing set to all participants!'
 
   conn.handler = handler.handler.bind(global.conn)
   conn.participantsUpdate = handler.participantsUpdate.bind(global.conn)
@@ -341,15 +333,15 @@ async function _quickTest() {
   Object.freeze(global.support);
 
   if(!s.ffmpeg) {
-    conn.logger.warn(`Silahkan install ffmpeg terlebih dahulu agar bisa mengirim video`);
+    conn.logger.warn(`Please install *ffmpeg* first so you can send videos.`);
   }
 
   if(s.ffmpeg && !s.ffmpegWebp) {
-    conn.logger.warn('Sticker Mungkin Tidak Beranimasi tanpa libwebp di ffmpeg (--enable-libwebp while compiling ffmpeg)');
+    conn.logger.warn('Sticker may not animate because *libwebp* is not enabled in *ffmpeg* (`--enable-libwebp` while compiling)');
   }
 
   if(!s.convert && !s.magick && !s.gm) {
-    conn.logger.warn('Fitur Stiker Mungkin Tidak Bekerja Tanpa imagemagick dan libwebp di ffmpeg belum terinstall (pkg install imagemagick)');
+    conn.logger.warn('Sticker feature may not work because *ImageMagick* and *libwebp* in *ffmpeg* are not installed (pkg install imagemagick)');
   }
 }
 
