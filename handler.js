@@ -304,11 +304,11 @@ export async function handler(chatUpdate) {
                 else
                     m.exp += xp
                 if(!isPrems && plugin.limit && global.db.data.users[m.sender].limit < plugin.limit * 1) {
-                    this.reply(m.chat, `[❗] Limit harian kamu telah habis, silahkan beli Premium melalui *${usedPrefix}premium*`, m)
+                    this.reply(m.chat, `[❗] Your daily limit has run out, please buy Premium through... *${usedPrefix}premium*`, m)
                     continue // Limit habis
                 }
                 if(plugin.level > _user.level) {
-                    this.reply(m.chat, `[💬] Diperlukan level ${plugin.level} untuk menggunakan perintah ini\n*Level mu:* ${_user.level} 📊`, m)
+                    this.reply(m.chat, `[💬] Level is required ${plugin.level} To use this command...\n*Level mu:* ${_user.level} 📊`, m)
                     continue // If the level has not been reached
                 }
                 let extra = {
@@ -364,7 +364,7 @@ export async function handler(chatUpdate) {
                         }
                     }
                     if(m.limit)
-                        m.reply(+m.limit + ' Limit kamu terpakai')
+                        m.reply(+m.limit + 'Your limit has been used up.')
                 }
                 break
             }
@@ -519,11 +519,11 @@ export async function deleteUpdate(message) {
         let chat = global.db.data.chats[msg.chat] || {}
         if(chat.delete) return
         this.reply(msg.chat, `
-Terdeteksi @${participant.split`@`[0]} telah menghapus pesan. 
-Untuk mematikan fitur ini, ketik
+Detected @${participant.split`@`[0]} Message has been deleted.
+To disable this feature, type  
 *.enable delete*
 
-Untuk menghapus pesan yang dikirim oleh Bot, reply pesan dengan perintah
+To delete a message sent by the Bot, reply to the message with the command  
 *.delete*`, msg)
         this.copyNForward(msg.chat, msg).catch(e => console.log(e, msg))
     } catch (e) {
@@ -533,17 +533,17 @@ Untuk menghapus pesan yang dikirim oleh Bot, reply pesan dengan perintah
 
 global.dfail = (type, m, conn) => {
     let msg = {
-        rowner: '*ONLY DEVELOPER* • COMMAND INI HANYA UNTUK DEVELOPER BOT',
-        owner: '*ONLY OWNER* • COMMAND INI HANYA UNTUK OWNER BOT',
-        mods: '*ONLY MODERATOR* • COMMAND INI HANYA UNTUK MODERATOR BOT',
-        premium: '*ONLY PREMIUM* • COMMAND INI HANYA UNTUK PREMIUM USER',
-        group: '*GROUP CHAT* • COMMAND INI HANYA BISA DIPAKAI DIDALAM GROUP',
-        private: '*PRIVATE CHAT* • COMMAND INI HANYA BISA DIPAKAI DIPRIVAT CHAT',
-        admin: '*ONLY ADMIN* • COMMAND INI HANYA UNTUK ADMIN GROUP',
-        botAdmin: '*ONLY BOT ADMIN* • COMMAND INI HANYA BISA DIGUNAKAN KETIKA BOT MENJADI ADMIN',
-        unreg: '*YOU ARE NOT REGISTERED YET* • KETIK .daftar UNTUK BISA MENGGUNAKAN FITUR INI',
-        restrict: '*RESTRICT* • RESTRICT BELUM DINYALAKAN DICHAAT INI',
-        disable: '*DISABLED* • CMD INI TELAH DIMATIKAN OLEH OWNER', 
+              rowner: '*ONLY DEVELOPER* • THIS COMMAND IS ONLY FOR THE BOT DEVELOPER'
+              owner: '*ONLY OWNER* • THIS COMMAND IS ONLY FOR THE BOT OWNER'
+              mods: '*ONLY MODERATOR* • THIS COMMAND IS ONLY FOR MODERATOR USERS'
+              premium: '*ONLY PREMIUM* • THIS COMMAND IS ONLY FOR PREMIUM USERS'
+              group: '*GROUP CHAT* • THIS COMMAND CAN ONLY BE USED IN GROUPS'
+              private: '*PRIVATE CHAT* • THIS COMMAND CAN ONLY BE USED IN PRIVATE CHAT'
+              admin: '*ONLY ADMIN* • THIS COMMAND IS ONLY FOR GROUP ADMINS'
+              botAdmin: '*ONLY BOT ADMIN* • THIS COMMAND CAN ONLY BE USED IF THE BOT IS ADMIN'
+              unreg: '*YOU ARE NOT REGISTERED YET* • TYPE .register TO USE THIS FEATURE'
+              restrict: '*RESTRICT* • RESTRICT IS NOT ENABLED IN THIS CHAT'
+              disable: '*DISABLED* • THIS COMMAND HAS BEEN DISABLED BY THE OWNER'
     }[type]
     if(msg) return conn.reply(m.chat, msg, m)
 }
