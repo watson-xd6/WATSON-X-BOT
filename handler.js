@@ -304,11 +304,11 @@ export async function handler(chatUpdate) {
                 else
                     m.exp += xp
                 if(!isPrems && plugin.limit && global.db.data.users[m.sender].limit < plugin.limit * 1) {
-                    this.reply(m.chat, `[❗] Your daily limit has run out, please buy Premium through... *${usedPrefix}premium*`, m)
+                    this.reply(m.chat, `[❗] Your daily limit has run out, please buy Premium through *${usedPrefix}premium*`, m)
                     continue // Limit habis
                 }
                 if(plugin.level > _user.level) {
-                    this.reply(m.chat, `[💬] Level is required ${plugin.level} To use this command...\n*Level mu:* ${_user.level} 📊`, m)
+                    this.reply(m.chat, `[💬] Level is required ${plugin.level} to use this command\n*Level mu:* ${_user.level} 📊`, m)
                     continue // If the level has not been reached
                 }
                 let extra = {
@@ -364,7 +364,7 @@ export async function handler(chatUpdate) {
                         }
                     }
                     if(m.limit)
-                        m.reply(+m.limit + 'Your limit has been used up.')
+                        m.reply(+m.limit + ' Limit kamu terpakai')
                 }
                 break
             }
@@ -533,17 +533,17 @@ To delete a message sent by the Bot, reply to the message with the command
 
 global.dfail = (type, m, conn) => {
     let msg = {
-              rowner: '*ONLY DEVELOPER* • THIS COMMAND IS ONLY FOR THE BOT DEVELOPER'
-              owner: '*ONLY OWNER* • THIS COMMAND IS ONLY FOR THE BOT OWNER'
-              mods: '*ONLY MODERATOR* • THIS COMMAND IS ONLY FOR MODERATOR USERS'
-              premium: '*ONLY PREMIUM* • THIS COMMAND IS ONLY FOR PREMIUM USERS'
-              group: '*GROUP CHAT* • THIS COMMAND CAN ONLY BE USED IN GROUPS'
-              private: '*PRIVATE CHAT* • THIS COMMAND CAN ONLY BE USED IN PRIVATE CHAT'
-              admin: '*ONLY ADMIN* • THIS COMMAND IS ONLY FOR GROUP ADMINS'
-              botAdmin: '*ONLY BOT ADMIN* • THIS COMMAND CAN ONLY BE USED IF THE BOT IS ADMIN'
-              unreg: '*YOU ARE NOT REGISTERED YET* • TYPE .register TO USE THIS FEATURE'
-              restrict: '*RESTRICT* • RESTRICT IS NOT ENABLED IN THIS CHAT'
-              disable: '*DISABLED* • THIS COMMAND HAS BEEN DISABLED BY THE OWNER'
+        rowner: '*ONLY DEVELOPER* • THIS COMMAND IS ONLY FOR THE BOT DEVELOPER',
+        owner: '*ONLY OWNER* • THIS COMMAND IS ONLY FOR THE BOT OWNER',
+        mods: '*ONLY MODERATOR* • THIS COMMAND IS ONLY FOR MODERATOR USER',
+        premium: '*ONLY PREMIUM* • THIS COMMAND IS ONLY FOR PREMIUM USER',
+        group: '*GROUP CHAT* • THIS COMMAND CAN ONLY BE USED IN GROUPS',
+        private: '*PRIVATE CHAT* • THIS COMMAND CAN ONLY BE USED IN PRIVATE CHAT',
+        admin: '*ONLY ADMIN* • THIS COMMAND IS ONLY FOR GROUP ADMINS',
+        botAdmin: '*ONLY BOT ADMIN* • THIS COMMAND CAN ONLY BE USED IF THE BOT IS ADMIN',
+        unreg: '*YOU ARE NOT REGISTERED YET* • TYPE .register TO USE THIS FEATURE',
+        restrict: '*RESTRICT* • RESTRICT IS NOT ENABLED IN THIS CHAT',
+        disable: '*DISABLED* • THIS COMMAND HAS BEEN DISABLED BY THE OWNER', 
     }[type]
     if(msg) return conn.reply(m.chat, msg, m)
 }
