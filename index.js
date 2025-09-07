@@ -1,3 +1,11 @@
+/*
+```javascript 🐓
+Author  : WATSON-XD
+WA      : +263789622747
+Base    : WATSON-MultiDevice
+Release : 3 SEPTEMBER 2025
+*/
+
 import yargs from 'yargs';
 import cfonts from 'cfonts';
 import { fileURLToPath } from 'url';
@@ -15,7 +23,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const require = createRequire(__dirname);
 const { name, author } = require(join(__dirname, './package.json'));
 
-say('Lightweight\nWhatsApp Bot', { font: 'chrome', align: 'center', gradient: ['red', 'magenta'] });
+say('WATSON-XD-\nBOT', { font: 'chrome', align: 'center', gradient: ['red', 'magenta'] });
 say(`'${name}' By @${author.name || author}`, { font: 'console', align: 'center', gradient: ['red', 'magenta'] });
 
 console.log('🐾 Starting...');
