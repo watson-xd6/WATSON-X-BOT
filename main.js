@@ -1,3 +1,5 @@
+
+
 // process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '1';
 
@@ -69,7 +71,7 @@ global.loadDatabase = async function loadDatabase() {
 loadDatabase()
 
 const { version } = await fetchLatestBaileysVersion()
-const { state, saveCreds } = await useMultiFileAuthState('./sessions')
+const { state, saveCreds } = await useMultiFileAuthState('./Sessions')
 const connectionOptions = {
   version,
   logger: pino({ level: 'silent' }),
@@ -145,19 +147,19 @@ async function connectionUpdate(update) {
   }
 
   if(connection == 'connecting') {
-    console.log(chalk.redBright('⚡ Mengaktifkan Bot, Mohon tunggu sebentar...'));
+    console.log(chalk.redBright('🥂 Activating bot, please wait a moment..'));
   } else if(connection == 'open') {
-    console.log(chalk.green('✅ Tersambung'));
+    console.log(chalk.green('✅ Connected'));
   }
 
   if(isOnline == true) {
-    console.log(chalk.green('Status Aktif'));
+    console.log(chalk.green('Status On'));
   } else if(isOnline == false) {
-    console.log(chalk.red('Status Mati'));
+    console.log(chalk.red('Status Off'));
   }
 
   if(receivedPendingNotifications) {
-    console.log(chalk.yellow('Menunggu Pesan Baru'));
+    console.log(chalk.yellow('Waiting for new message'));
   }
 
   if(connection == 'close') {
@@ -207,8 +209,7 @@ global.reloadHandler = async function (restatConn) {
     conn.ev.off('creds.update', conn.credsUpdate)
   }
 
-  
-conn.welcome = '❖━━━━━━[ Welcome ]━━━━━━❖\n\n┏––––––━━━━━━━━•\n│☘︎ @subject\n┣━━━━━━━━┅┅┅\n│( 👋 Hello @user)\n├[ Intro ]—\n│ NAME: \n│ AGE: \n│ GENDER:\n┗––––––━━┅┅┅\n\n––––––┅┅ DESCRIPTION ┅┅––––––\n@desc'
+  conn.welcome = '❖━━━━━━[ Welcome ]━━━━━━❖\n\n┏––––––━━━━━━━━•\n│☘︎ @subject\n┣━━━━━━━━┅┅┅\n│( 👋 Hello @user)\n├[ Intro ]—\n│ NAME: \n│ AGE: \n│ GENDER:\n┗––––––━━┅┅┅\n\n––––––┅┅ DESCRIPTION ┅┅––––––\n@desc'
   
 conn.bye = '❖━━━━━━[ Leaving ]━━━━━━❖\nGoodbye @user 👋😃'
 conn.spromote = '@user is now an admin!'
@@ -333,15 +334,15 @@ async function _quickTest() {
   Object.freeze(global.support);
 
   if(!s.ffmpeg) {
-    conn.logger.warn(`Please install *ffmpeg* first so you can send videos.`);
+    conn.logger.warn(`Silahkan install ffmpeg terlebih dahulu agar bisa mengirim video`);
   }
 
   if(s.ffmpeg && !s.ffmpegWebp) {
-    conn.logger.warn('Sticker may not animate because *libwebp* is not enabled in *ffmpeg* (`--enable-libwebp` while compiling)');
+    conn.logger.warn('Sticker Mungkin Tidak Beranimasi tanpa libwebp di ffmpeg (--enable-libwebp while compiling ffmpeg)');
   }
 
   if(!s.convert && !s.magick && !s.gm) {
-    conn.logger.warn('Sticker feature may not work because *ImageMagick* and *libwebp* in *ffmpeg* are not installed (pkg install imagemagick)');
+    conn.logger.warn('Fitur Stiker Mungkin Tidak Bekerja Tanpa imagemagick dan libwebp di ffmpeg belum terinstall (pkg install imagemagick)');
   }
 }
 
