@@ -1,5 +1,9 @@
 /*
-https://whatsapp.com/channel/0029Vb5m3D9A2pL6kvlwSf2S
+```javascript 🐓
+Author  : WATSON-XD
+WA      : +263789622747
+Base    : WATSON-MultiDevice
+Release : 3 SEPTEMBER 2025
 */
 
 import { watchFile, unwatchFile } from 'fs'
@@ -8,9 +12,9 @@ import { fileURLToPath } from 'url'
 import moment from 'moment-timezone'
 
 /*============= WAKTU =============*/
-let wibh = moment.tz('Asia/Jakarta').format('HH')
-let wibm = moment.tz('Asia/Jakarta').format('mm')
-let wibs = moment.tz('Asia/Jakarta').format('ss')
+let wibh = moment.tz('Africa/Harare').format('HH')
+let wibm = moment.tz('Africa/Harare').format('mm')
+let wibs = moment.tz('Africa/Harare').format('ss')
 let wktuwib = `${wibh} H ${wibm} M ${wibs} S`
 let wktugeneral = `${wibh}:${wibm}:${wibs}`
 
@@ -28,7 +32,7 @@ const readMore = more.repeat(4001)
 
 /*============= MAIN INFO =============*/
 global.pairing = '263781330745'
-global.owner = [['263781330745', 'WatsonXD', true]]
+global.owner = [['263781330745', 'watson-Xd-dev', true]]
 global.mods = []
 global.prems = []
 global.nomorbot = '263781330745'
@@ -36,24 +40,25 @@ global.nomorown = '263781330745'
 
 /*============= WATERMARK =============*/
 global.readMore = readMore
-global.author = 'watsonfourpence'
-global.namebot = 'WATSON-XD-BOT ESM'
-global.wm = '© WATSON-MD By Watson global.watermark = wm'
+global.author = 'watson-Xd-dev'
+global.namebot = 'WATSON-XD-BOT'
+global.wm = '© WATSON-XD-BOT'
+global.watermark = wm
 global.botdate = `⫹⫺ DATE: ${week} ${date}\n⫹⫺ 𝗧𝗶𝗺𝗲: ${wktuwib}`
 global.bottime = `T I M E : ${wktuwib}`
-global.stickpack = `Sticker Dibuat dengan ${namebot}\ngithub.com/watson-xd6\n\nWATSON-XD-BOT\n+${nomorbot}`
-global.stickauth = `© WATSON-XD-BOT By WatsonXD`
+global.stickpack = `Sticker by watson fourpence`
+global.stickauth = `© WATSON-XD-BOT By watson-fourpence`
 global.week = `${week} ${date}`
 global.wibb = `${wktuwib}`
 
 //*============= SOSMED =============*/
 global.sig = 'https://www.instagram.com/watson-xd3'
 global.sgh = 'https://github.com/watson-xd6'
-global.sgc = 'https://whatsapp.com/channel/0029Vb5m3D9A2pL6kvlwSf2S'
-global.sgw = 'https://ryzumi.vip'
+global.sgc = 'https://chat.whatsapp.com/EvasRhIcb9L5TtKcjlFoQo'
+global.sgw = 'https://chat.whatsapp.com/EvasRhIcb9L5TtKcjlFoQo'
 global.sdc = '-'
-global.sfb = 'https://www.facebook.com/Nao.Tomori.UwU'
-global.snh = 'https://www.instagram.com/fatih_frdaus'
+global.sfb = 'https://www.facebook.com/profile.php?id=100093026894360&mibextid=ZbWKwL'
+global.snh = 'https://www.instagram.com/watson-xd3'
 
 /*============= DONASI =============*/
 global.qris = 'https://api.ryzumi.vip/images/qris.png'
@@ -79,8 +84,8 @@ global.htjava = '⫹⫺'    //hiasan Doang :v
 global.hsquere = ['⛶', '❏', '⫹⫺']
 
 /*============= RESPON =============*/
-global.wait = 'Please Wait...'
-global.eror = 'Error!'
+global.wait = '*👋 _•ωαтѕση-вσт-ιѕ-ℓσα∂ιηg..._*\n*▰▰▰▱▱▱▱▱⌛️*'
+global.error = '❎' 
 
 global.APIs = {
     ryzumi: 'https://api.ryzumi.vip',
