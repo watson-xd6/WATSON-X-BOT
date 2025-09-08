@@ -5,8 +5,14 @@ import path from 'path'
 import { unwatchFile, watchFile } from 'fs'
 import chalk from 'chalk'
 import knights from 'knights-canvas'
+import fetch from 'node-fetch'
 
+/**
+ * @type {import('@adiwajshing/baileys')}
+ */
+const { proto } = (await import('@adiwajshing/baileys')).default
 const isNumber = x => typeof x === 'number' && !isNaN(x)
+const delay = ms => isNumber(ms) && new Promise(resolve => setTimeout(resolve, ms))
 
 /**
  * Handle messages upsert
@@ -15,7 +21,8 @@ const isNumber = x => typeof x === 'number' && !isNaN(x)
 
 export async function handler(chatUpdate) {
     this.msgqueque = this.msgqueque || []
-    if(!chatUpdate) return
+    if(!chatUpdate)
+     return
     this.pushMessage(chatUpdate.messages).catch(console.error)
     let m = chatUpdate.messages[chatUpdate.messages.length - 1]
     if(!m) return
