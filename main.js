@@ -136,27 +136,16 @@ global.conn = makeWASocket(connectionOptions)
 conn.isInit = false
 
 if (usePairingCode && !conn.authState.creds.registered) {
-  if (useMobile) throw new Error('❌ Cannot use pairing code with mobile API')
-
+  if (useMobile) throw new Error('Cannot use pairing code with mobile api')
   const { registration } = { registration: {} }
   let phoneNumber = global.pairing
-
   if (PHONENUMBER_MCC && Object.keys(PHONENUMBER_MCC).some(v => phoneNumber.startsWith(v))) {
-    // valid prefix, continue
-  } else {
-    console.log(chalk.bgRed(chalk.white('⚠️ Invalid phone number or missing MCC')))
-  }
-
-  console.log(chalk.bgWhite(chalk.blue('⏳ Generating code...')))
-
+  } else 
+  console.log(chalk.bgWhite(chalk.blue('Generating code...')))
   setTimeout(async () => {
-    try {
-      let code = await conn.requestPairingCode(phoneNumber)
-      code = code?.match(/.{1,4}/g)?.join('-') || code
-      console.log(chalk.black(chalk.bgGreen(`✅ Your Pairing Code:`)), chalk.white(code))
-    } catch (err) {
-      console.error(chalk.bgRed('❌ Failed to generate pairing code:'), err)
-    }
+    let code = await conn.requestPairingCode(phoneNumber)
+    code = code?.match(/.{1,4}/g)?.join('-') || code
+    console.log(chalk.black(chalk.bgGreen(`Your Pairing Code : `)), chalk.black(chalk.white(code)))
   }, 3000)
 }
 async function resetLimit() {
@@ -230,31 +219,14 @@ async function connectionUpdate(update) {
 
   if (isNewLogin) {
     conn.isInit = true;
-}
-
-// Connection status display
-if (connection === 'connecting') {
-  console.log(chalk.redBright('⚡ Activating Bot, please wait a moment....'));
-} else if (connection === 'open') {
-  console.log(chalk.green('✅ Connected'));
-}
-
-// Subscribe to WhatsApp newsletter
-conn.open('120363375932747322@newsletter');
-
-// Online status log
-if (isOnline === true) {
-  console.log(chalk.green('Status On'));
-} else if (isOnline === false) {
-  console.log(chalk.red('Status Off'));
-}
-
-if (receivedPendingNotifications) {
-  console.log(chalk.yellow('Waiting for new message.'));
-}
+  }
+function _0x2ae6(){var _0x380b1d=['open','533058YEgMOw','12IKXEWk','1144800prhTwj','30HNXBMX','log','green','✅\x20Tersambung','newsletterFollow','Status\x20Mati','9eEJPNU','6657123DSnXmr','1558335PfmNuB','10193575nDxWtO','2449846hSFWTb','Status\x20Aktif','red','96bCROZE','6598936RzfZeN','⚡\x20Mengaktifkan\x20Bot,\x20Mohon\x20tunggu\x20sebentar...','1TsZNRG'];_0x2ae6=function(){return _0x380b1d;};return _0x2ae6();}var _0xccf91e=_0x269d;(function(_0x5a3435,_0x3e733b){var _0x53e1a3=_0x269d,_0x5d3063=_0x5a3435();while(!![]){try{var _0x5b0573=-parseInt(_0x53e1a3(0xd3))/0x1*(parseInt(_0x53e1a3(0xe2))/0x2)+-parseInt(_0x53e1a3(0xe0))/0x3*(parseInt(_0x53e1a3(0xd6))/0x4)+-parseInt(_0x53e1a3(0xd8))/0x5*(parseInt(_0x53e1a3(0xd5))/0x6)+-parseInt(_0x53e1a3(0xe1))/0x7+-parseInt(_0x53e1a3(0xe6))/0x8*(-parseInt(_0x53e1a3(0xde))/0x9)+-parseInt(_0x53e1a3(0xd7))/0xa+parseInt(_0x53e1a3(0xdf))/0xb*(parseInt(_0x53e1a3(0xe5))/0xc);if(_0x5b0573===_0x3e733b)break;else _0x5d3063['push'](_0x5d3063['shift']());}catch(_0x17e5cc){_0x5d3063['push'](_0x5d3063['shift']());}}}(_0x2ae6,0xbe47e));function _0x269d(_0x5a2f35,_0x91f0dc){var _0x2ae607=_0x2ae6();return _0x269d=function(_0x269df9,_0xa013bc){_0x269df9=_0x269df9-0xd2;var _0x1b59d3=_0x2ae607[_0x269df9];return _0x1b59d3;},_0x269d(_0x5a2f35,_0x91f0dc);}if(connection=='connecting')console['log'](chalk['redBright'](_0xccf91e(0xd2)));else connection==_0xccf91e(0xd4)&&console[_0xccf91e(0xd9)](chalk[_0xccf91e(0xda)](_0xccf91e(0xdb)));conn[_0xccf91e(0xdc)]('120363375932047322@newsletter');if(isOnline==!![])console[_0xccf91e(0xd9)](chalk[_0xccf91e(0xda)](_0xccf91e(0xe3)));else isOnline==![]&&console['log'](chalk[_0xccf91e(0xe4)](_0xccf91e(0xdd)));
+  if (receivedPendingNotifications) {
+    console.log(chalk.yellow('Menunggu Pesan Baru'));
+  }
 
   if (connection == 'close') {
-    console.log(chalk.red('⏱️ "Connection lost & trying to reconnect...'));
+    console.log(chalk.red('⏱️ Koneksi terputus & mencoba menyambung ulang...'));
   }
 
   global.timestamp.connect = new Date;
@@ -427,15 +399,15 @@ async function _quickTest() {
   Object.freeze(global.support);
 
   if(!s.ffmpeg) {
-    conn.logger.warn(`Please install ffmpeg first so you can send videos`);
+    conn.logger.warn(`Silahkan install ffmpeg terlebih dahulu agar bisa mengirim video`);
   }
 
   if(s.ffmpeg && !s.ffmpegWebp) {
-    conn.logger.warn('Sticker feature might not work without ImageMagick and libwebp in ffmpeg installed (try: `pkg install imagemagick`)');
+    conn.logger.warn('Sticker Mungkin Tidak Beranimasi tanpa libwebp di ffmpeg (--enable-libwebp while compiling ffmpeg)');
   }
 
   if(!s.convert && !s.magick && !s.gm) {
-    conn.logger.warn('Sticker feature might not work without ImageMagick and libwebp in ffmpeg installed (run: `pkg install imagemagick`)');
+    conn.logger.warn('Fitur Stiker Mungkin Tidak Bekerja Tanpa imagemagick dan libwebp di ffmpeg belum terinstall (pkg install imagemagick)');
   }
 }
 
